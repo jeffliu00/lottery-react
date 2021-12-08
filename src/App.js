@@ -9,7 +9,8 @@ class App extends React.Component {
     manager: '',
     players: [],
     balance: '',
-    value: ''
+    value: '',
+    message:''
   };
 
   async componentDidMount(){
@@ -19,6 +20,34 @@ class App extends React.Component {
 
     this.setState({manager, players, balance })
   }
+
+  onSubmit = async (event) =>{
+    event.preventDefault();
+
+    const accounts = await web3.eth.getAccounts();
+
+    this.setState({message: 'Waiting on transaction success...'})
+
+    await lottery.methods.enter().send({
+      from: accounts[0],
+      value: web3.utils.toWei(this.state.value, 'ether')
+    });
+
+    this.setState({message: 'You have been entered!'});
+  }
+
+  onClick = async (event)=>{
+    event.preventDefault();
+
+    const accounts = await web3.eth.getAccounts();
+
+    this.setState({message: 'Picking winner... stay tuned!'});
+    await lottery.methods.pickWinner().send({
+      from: accounts[0]
+    });
+    this.setState({message: `Winner has been picked!`})
+  }
+
   render() {
     console.log(web3.version);
     web3.eth.getAccounts().then(console.log);
@@ -29,11 +58,11 @@ class App extends React.Component {
         <header className="App-header">
           <h2>Lottery Contract</h2>
           <p>This contract is managed by {this.state.manager} <br />
-          There are currently {this.state.players.length} people entered,
+          There are currently {this.state.players.length} people entered, <br/>
           competing to win {web3.utils.fromWei(this.state.balance, 'ether')} ether!;
           </p>
           <hr />
-          <form>
+          <form onSubmit={this.onSubmit}>
             <h4>Want to try your luck?</h4>
             <div>
               <label>Amount of ether to enter</label>
@@ -42,6 +71,14 @@ class App extends React.Component {
             </div>
           </form>
           </header>
+
+          <hr/>
+
+        <h4>Ready to pick a winner?</h4>
+        <button onClick={this.onClick}>Pick a winner!</button>
+          <hr/>
+
+          <h1 >{this.state.message}</h1>
       </div>
     );
   }
