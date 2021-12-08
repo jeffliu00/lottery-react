@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\Blockchain"
+		},
+		{
+			"path": "..\\..\\Starport_Test"
+		},
+		{
+			"path": "..\\..\\lottery"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"solidity.compileUsingRemoteVersion": "v0.4.17+commit.bdeb9e52"
+	}
+}
