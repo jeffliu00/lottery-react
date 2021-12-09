@@ -45,7 +45,9 @@ class App extends React.Component {
     await lottery.methods.pickWinner().send({
       from: accounts[0]
     });
-    this.setState({message: `Winner has been picked!`})
+
+    const winner = await lottery.methods.prevWinner().call();
+    this.setState({message: `Winner is: ${winner}`})
   }
 
   render() {
@@ -56,7 +58,8 @@ class App extends React.Component {
 
       <div className="App">
         <header className="App-header">
-          <h2>Lottery Contract</h2>
+          <h2>IDC Smart Contract</h2>
+          <h3>ADA WANF FUt U BIC</h3>
           <p>This contract is managed by {this.state.manager} <br />
           There are currently {this.state.players.length} people entered, <br/>
           competing to win {web3.utils.fromWei(this.state.balance, 'ether')} ether!;

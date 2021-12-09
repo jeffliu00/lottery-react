@@ -1,22 +1,7 @@
-import web3 from "./web3";
-
-const address = "0x3c86AE6566194F2402DF64302eE4F41CC74F1a29";
-
-const abi = [{
+ [{
   "constant": true,
   "inputs": [],
   "name": "manager",
-  "outputs": [{
-    "name": "",
-    "type": "address"
-  }],
-  "payable": false,
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "constant": true,
-  "inputs": [],
-  "name": "prevWinner",
   "outputs": [{
     "name": "",
     "type": "address"
@@ -71,4 +56,3 @@ const abi = [{
   "stateMutability": "nonpayable",
   "type": "constructor"
 }]
-export default new web3.eth.Contract(abi, address);
